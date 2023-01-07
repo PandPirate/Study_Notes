@@ -119,7 +119,13 @@ Program received signal SIGINT, Interrupt.
     其中，breakpoints 参数可有可无；num... 表示可以提供多个断点的编号，enable 命令可以同时激活多个断点。
     ```
 
+#### 调试线程
 
+- info threads 查看线程
+- info inferiors  查看进程
+- thread n         切换线程   n -代表第几个线程
+
+![img](https://raw.githubusercontent.com/PandPirate/TyporaImages/main/typora/202212152032134.png)
 
 
 
