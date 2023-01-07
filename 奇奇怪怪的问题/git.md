@@ -69,3 +69,26 @@ target/
 ```
 
 引用 https://blog.csdn.net/zxlyx/article/details/124237977
+
+- git diff
+
+    ```git
+    git diff # 用来查看工作区文件和暂存区文件的区别
+    git diff HEAD 用来查看工作区和仓库区文件的区别
+    git diff --cached或者git diff --staged用来查看暂存区和仓库区文件的区别
+    git diff commit-id-old commit-id-new
+    git diff file_name 获取指定文件的修改
+    --stat 统计哪些文件被改动,有多少行被改动
+    ```
+
+     ![img](https://raw.githubusercontent.com/PandPirate/TyporaImages/main/typora/202212182047076.png)
+
+![image-20221218204750423](https://raw.githubusercontent.com/PandPirate/TyporaImages/main/typora/202212182047178.png)
+
+- git stash
+
+    在本地代码有修改情况下,不能进行git pull操作.需要把修改放到栈里 git stash.代码更新后在git stash pop 把放到栈里的修改拿出来
+
+- ### git常用命令以及如何与fork别人的仓库保持同步
+
+    ![image-20230107171739584](https://raw.githubusercontent.com/PandPirate/TyporaImages/main/typora/202301071718237.png)
