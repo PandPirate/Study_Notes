@@ -1,6 +1,6 @@
 # GIT
 
-<<<<<<< HEAD
+
 ### git与svn区别
 Git 不仅仅是个版本控制系统，它也是个内容管理系统(CMS)，工作管理系统等。
 
@@ -24,5 +24,3 @@ Git 与 SVN 区别点：
 - 3. git add <filename>
 - 4. git comit -m "代码提交信息"
 - 5. git push origin master
-=======
->>>>>>> parent of 739334a (add git cmd)
