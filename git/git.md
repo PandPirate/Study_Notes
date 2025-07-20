@@ -27,11 +27,14 @@ Git 与 SVN 区别点：
 6. git show     查看最近修改
 
 ### git 基本配置
+```bash
 1. 设置用户的名字和email
-$ git config --global user.name "xx"
+$ git config --global user.name "xx"`
 $ git config --global user.email "xx@xx.com"
+
 2. 编辑commit message时,需要一个文本编辑器,具体可以由用户指定
 $ git config --global core.editor vi
+
 3. 如果工作区有一些文件或目录不希望被git管理,可以在工作区的根目录创建文件.gitignore 并写上它们的路径
 
 --global  表示全局配置,没有这个参数就只是对当前仓库生效.
@@ -39,19 +42,21 @@ $ git config --global core.editor vi
 查看配置信息
 $ git config --list
 $ git config --global --list
-
+```
 ### git 目录结构
 - Working Directory: 工作区
 - Staging Area     : 暂存区,又称index, cache
 - Local Repository : 仓库区,或本地repo
 
 ### git  重置版本
+``` bash
 - reset
 $ git reset HEAD~n              撤销n个版本.重置后,被撤销的版本会从暂存区回滚到工作区
 $ git reset --hard HEAD~n       硬重置,撤销n个版本.重置后,被撤销的版本*不会*从暂存区回滚到工作区
 $ git reflog                    历史记录, 可以找到软重置或硬重置的历史记录
-
+```
 ### git 分支
+```bash
 - 查看当前分支列表,其中带*的表示当前所在分支
 $ git branch
 - 创建分支并切换到新分支
@@ -89,10 +94,12 @@ $ git rebase master
 
 $ git checkout master
 $ git cherry-pick commit id<>
-
+```
 ### 远程交互
+```bash
 - 查看分支
 $ git remote -v
 
 先创建本地分支,再创建远程分支.关联本地和远程分支.
 $ git push --set-upstream origin main
+```
