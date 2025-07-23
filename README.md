@@ -1,2 +1,2 @@
 # Study_Notes
-Linux C C++
+Linux C C++ python
