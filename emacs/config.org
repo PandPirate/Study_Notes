@@ -1,0 +1,6 @@
+# 重命名
+M-x rename-file
+直接输入旧文件名和新文件名（如果当前缓冲区正访问该文件，可以用 M-x rename-visited-file 自动更新缓冲区指向）
+# magit
+#treesit
+M-x treesit-install-language-grammar  安装语言树
