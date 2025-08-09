@@ -38,7 +38,7 @@ def log_with_args(text):
 def greet(name):
     print(f"Hello, {name}!")
 
-@metric  
+@metric
 def slow(): # slow = metric(slow)
     print("slow function is running...")
     time.sleep(20)  # Simulating a slow operation
@@ -53,4 +53,4 @@ def main():
         print(f"Function '{slow.__name__}' was called at {datetime.now().strftime('%Y-%m-%d %H:%M:%S')} and returned 'Done'.")
 
 if __name__ == "__main__":
-    main() 
+    main()
