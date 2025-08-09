@@ -76,12 +76,12 @@ HEAD 指向目标分支,即要合并别的分支的分支.如果合并失败,出
 - 变基(rebase)
 本来是这样:
    v1---v2---v3---v4---v5         master
-  root        \ 
+  root        \
                v6---v7            feature
-               
+
 想改成这样:
    v1---v2---v3---v4---v5           master
-  root                  \ 
+  root                  \
                          v6---v7    feature
 我们从V3开始,创建了新的分支feature,这个feature就是以V3为基(base)的.
 我们新增两个commit之后, 想把feature分支改成(re)以V5为基(base),这就是变基.
@@ -102,4 +102,41 @@ $ git remote -v
 
 先创建本地分支,再创建远程分支.关联本地和远程分支.
 $ git push --set-upstream origin main
+```
+
+## 问题
+- push时需要输入用户名密码
+   1. 检查远程仓库地址是不是 SSH 格式
+   ```bash
+    git remote -v
+    应该看到类似：git@github.com:username/repo.git
+    如果是https://github.com/username/repo.git
+    如果是 HTTPS，Git 会要求用户名和密码。
+    如果是 HTTPS，可以用下面命令切换到 SSH：
+    git remote set-url origin git@github.com:username/repo.git
+   ```
+   2. SSH key 是否正确配置和加载
+```bash
+	确认你生成了 SSH key（通常是 ~/.ssh/id_rsa 和 ~/.ssh/id_rsa.pub）
+	钥已添加到对应 Git 服务器（GitHub、GitLab 等）账户中
+	SSH agent 已加载私钥：
+
+	ssh-add -l
+	如果没看到你的 key，执行：
+
+	ssh-add ~/.ssh/id_rsa
+```
+   3. 确认 Git 使用的是 SSH 而非 HTTPS 代理
+```
+	用下面命令测试 SSH 连接
+	正常情况下，会显示欢迎信息，不会要密码
+	ssh -T git@github.com
+```
+   4. 缓存凭据
+```
+	如果你之前用 HTTPS 访问过仓库，Git 可能缓存了旧凭据，建议清理凭据缓存。
+
+	Windows Credential Manager 中清理对应条目
+
+	Linux/macOS 可尝试清理 .git-credential 缓存
 ```
