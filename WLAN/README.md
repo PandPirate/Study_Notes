@@ -177,3 +177,70 @@ ip -s link show wlp0s20u2
 4. ip link set br0 up
 5. 如果br0IP丢了 重新设置ip
 sudo ip addr add 192.168.1.1/24 dev br0
+```
+
+# wifi (usb网卡 + hostpad + bridge)
+1. rfkill list
+   ```
+   pirate@HPARCH ~ % rfkill list
+0: hci0: Bluetooth
+        Soft blocked: no
+        Hard blocked: no
+4: phy3: Wireless LAN
+        Soft blocked: no  软件层面关闭
+        Hard blocked: no  硬件层面关闭
+```
+2. 解软件锁, 如果没有上锁跳过
+```
+sudo rfkill unblock wifi
+sudo rfkill unblock all
+
+```
+3. 解硬件锁，如果没有上锁跳过
+如果是 Hard blocked: yes，必须用 Fn 键 / BIOS 打开
+软件解不开
+4. 配置bridge, 不需要手动把wlan0加入到bridge
+```
+1. 清理旧状态
+sudo ip link set br0 down 2>/dev/null
+sudo ip link del br0 2>/dev/null
+
+2. 新建br0
+sudo ip link add br0 type bridge
+sudo ip link set br0 up
+
+3. 加入有线lan（如果没有跳过）此时不要加 wlan0
+sudo ip link set ethusb0 up
+sudo ip link set ethusb0 master br0
+
+4. 给br0配ip
+sudo ip addr add 192.168.1.1/24 dev br0
+```
+5. 让wlan进入AP mode
+```
+确保 wlan0 没在任何 bridge 里
+sudo ip link set wlan0 nomaster 2>/dev/null
+交给 hostapd 管理（不要手动 set up）
+sudo ip link set wlan0 down
+```
+6. 配置 hostapd 
+/etc/hostapd/hostapd.conf
+7. 启动 hostapd
+```
+sudo systemctl unmask hostapd
+sudo systemctl enable --now hostapd
+
+```
+8. 设置dhcp dns
+9. 开启转发 WAN<->LAN
+echo "net.ipv4.ip_forward=1" | sudo tee /etc/sysctl.d/99-forward.conf
+10. 验证
+```
+bridge link
+应该看到
+ethusb0 state forwarding
+wlan0   state forwarding
+
+```
+
+
