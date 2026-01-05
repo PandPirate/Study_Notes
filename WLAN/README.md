@@ -168,3 +168,12 @@ ip -s link show wlp0s20u2
 
 
 ```
+# bridge
+所有 slave 接口都 down → bridge 也会 down
+```
+1. ip link
+2. ip link set ethusb0 up
+3. sudo ip link set ethusb0 master br0 把接口重新加入bridge
+4. ip link set br0 up
+5. 如果br0IP丢了 重新设置ip
+sudo ip addr add 192.168.1.1/24 dev br0
