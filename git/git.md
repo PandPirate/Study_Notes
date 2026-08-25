@@ -104,6 +104,54 @@ $ git remote -v
 $ git push --set-upstream origin main
 ```
 
+### HTTPS 下 git pull 的方法步骤（需要用户名/密码）
+
+当 `git remote -v` 显示 `https://github.com/username/repo.git` 时，执行 `git pull` 会要求输入用户名和密码。
+
+1. 确认远程地址是 HTTPS 格式
+
+```bash
+$ git remote -v
+# 显示：https://github.com/username/repo.git
+```
+
+2. 生成 Personal Access Token（个人访问令牌）
+
+GitHub 自 2021 年 8 月 13 日起停用了 HTTPS 的账号密码认证，所以"密码"栏不能填登录密码，必须填 Token。
+
+生成步骤：
+1. GitHub → 右上角头像 → Settings
+2. 左侧最底部 → Developer settings
+3. → Personal access tokens → Tokens (classic) 或 Fine-grained tokens
+4. → Generate new token
+5. 勾选 repo 权限（拉取私有仓库需要）
+6. 生成后复制保存（页面只显示这一次）
+
+3. 执行 git pull 并输入凭据
+
+```bash
+$ git pull
+Username for 'https://github.com': 你的GitHub用户名
+Password for 'https://你的用户名@github.com': 粘贴 Token（屏幕不显示，直接回车）
+```
+
+4. （可选）把 Token 存进远程地址，避免每次输入
+
+```bash
+$ git remote set-url origin https://<用户名>:<Token>@github.com/username/repo.git
+```
+
+5. （可选）改用 SSH，彻底免密码
+
+```bash
+$ git remote set-url origin git@github.com:username/repo.git
+```
+
+注意：
+- Token 权限 = 账号本身的权限，不扩大也不缩小
+- 拉取公开仓库不需要 Token，任何人都能 pull
+- 拉取别人的私有仓库，需要对方把你加成 Collaborator（协作者）
+
 ## 问题
 - push时需要输入用户名密码
    1. 检查远程仓库地址是不是 SSH 格式
