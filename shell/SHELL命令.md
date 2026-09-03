@@ -92,3 +92,51 @@ sudo timeout -s 9 5s ping www.baidu.com
     
 
 参考: https://blog.csdn.net/londa/article/details/115698093
+
+### wc   **统计行数、单词数、字节数/字符数**
+
+- 语法：`wc [选项]... [文件]...`，无文件时从标准输入读入；多文件时逐个统计并输出total总计行
+
+```shell
+# 无参数时输出三列：行数  单词数  字节数  文件名
+wc test.txt
+# 5  23  190  test.txt
+# 从管道读入时不显示文件名
+echo "hello world" | wc
+#       1       2      12
+```
+
+- 常用选项
+    - `-l` 行数（实际统计换行符个数）
+    - `-w` 单词数（按空格/Tab/换行等空白字符切分）
+    - `-c` 字节数
+    - `-m` 字符数（按locale编码，UTF-8下1个汉字=1字符、3字节）
+    - `-L` 最长一行的长度
+
+```shell
+# 统计行数
+wc -l *.py
+# 递归统计所有.py文件行数（多文件末尾会输出total总计）
+find . -name '*.py' | xargs wc -l
+# 统计当前进程数
+ps aux | wc -l
+# 检查是否有超过80列的行
+wc -L *.py
+```
+
+- 易错点
+
+    ```shell
+    # 1. wc -l 数的是换行符\n：最后一行没有结尾换行符就不计数
+    printf 'a'   | wc -l   # 0
+    printf 'a\n' | wc -l   # 1
+    # 2. 字节 vs 字符：UTF-8下汉字占3字节
+    echo "中文" | wc -c   # 7  （6字节 + 换行）
+    echo "中文" | wc -m   # 3  （2汉字 + 换行）
+    # 3. 中文无空格时按一个"词"计算
+    echo "你好世界" | wc -w   # 1
+    # 4. locale不支持多字节时（如LC_ALL=C），-m等价于-c
+    LC_ALL=C wc -c test.txt
+    ```
+
+参考: https://www.gnu.org/software/coreutils/manual/html_node/wc-invocation.html
